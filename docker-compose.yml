@@ -1,0 +1,21 @@
+services:
+  ecrit-db:
+    image: postgres:16-alpine
+    container_name: ecrit-db
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: ecrit
+    ports:
+      - "5439:5432"
+    volumes:
+      - ecrit_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres -d ecrit"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+volumes:
+  ecrit_data:
