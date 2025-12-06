@@ -4,11 +4,12 @@ import { useQuery } from "@tanstack/react-query";
 import { QUERIES } from "@/lib/query";
 import { KEYS } from "@/lib/keys";
 import { Notes as NoteType } from "@/lib/types";
-import { Button } from "../ui/button";
+import { Button } from "@/components/ui/button";
 import { useDesktopOS } from "@/hooks/use-os";
 import useModal from "@/hooks/use-modal";
-import { Icons } from "../ui/icons";
+import { Icons } from "@/components/ui/icons";
 import Link from "next/link";
+import { Skeleton } from "@/components/ui/skeleton";
 
 export const Notes = () => {
   const os = useDesktopOS();
@@ -18,7 +19,14 @@ export const Notes = () => {
     queryFn: () => QUERIES.NOTES.all(),
   });
 
-  if (isLoading) return <div>Loading...</div>;
+  if (isLoading)
+    return (
+      <div className="flex flex-col divide-y w-full border">
+        {Array.from({ length: 10 }).map((_, index) => (
+          <NoteSkeleton key={index} />
+        ))}
+      </div>
+    );
   if (error) return <div>Error: {error.message}</div>;
 
   if (data.length === 0)
@@ -66,5 +74,23 @@ const Note = ({ note }: { note: NoteType }) => {
         </p>
       </div>
     </Link>
+  );
+};
+
+const NoteSkeleton = () => {
+  return (
+    <div className="p-4 flex items-center gap-4">
+      <div className="size-8 flex items-center justify-center border bg-muted/20">
+        <Icons.file className="size-4" />
+      </div>
+      <div className="flex flex-col flex-1">
+        <p className="text-sm font-mono first-letter:uppercase">
+          <Skeleton className="w-1/2 h-4" />
+        </p>
+        <p className="text-xs text-muted-foreground w-fit ml-auto">
+          <Skeleton className="w-20 h-3" />
+        </p>
+      </div>
+    </div>
   );
 };

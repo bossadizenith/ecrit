@@ -7,4 +7,4 @@ export type Session = InferSelectModel<typeof session>;
 export type Verification = InferSelectModel<typeof verification>;
 export type Notes = InferSelectModel<typeof notes>;
 
-export type ModalTypes = "create-note";
+export type ModalTypes = "create-note" | "search" | "settings";
