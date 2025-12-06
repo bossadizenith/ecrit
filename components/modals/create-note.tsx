@@ -52,7 +52,7 @@ export const CreateNote = () => {
         }
         return [data, ...old];
       });
-      router.push(`/n/${data.id}`);
+      router.push(`/n/${data.slug}`);
       onClose();
     },
     onError: (error) => {

@@ -81,9 +81,8 @@ export default function Editor() {
 
   const updateFormFromEditor = (editor: EditorInstance) => {
     const markdown = editor.storage.markdown.getMarkdown();
+    form.setValue("content", markdown);
   };
-
-  const updateFormFromLocalStorage = () => {};
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
     if (e.key === "Enter") {
@@ -129,18 +128,7 @@ export default function Editor() {
 
   const debouncedUpdates = useDebouncedCallback(
     async (editor: EditorInstance) => {
-      const json = editor.getJSON();
-      const html = editor.getHTML();
       const markdown = editor.storage.markdown.getMarkdown();
-
-      window.localStorage.setItem(
-        getLocalStorageKey("-html-content", data?.id as string),
-        highlightCodeblocks(html)
-      );
-      window.localStorage.setItem(
-        getLocalStorageKey("", data?.id as string),
-        JSON.stringify(json)
-      );
       window.localStorage.setItem(
         getLocalStorageKey("-markdown", data?.id as string),
         markdown
@@ -168,11 +156,6 @@ export default function Editor() {
       return;
     }
   }, [isLoading, data?.content]);
-
-  useEffect(() => {
-    if (isLoading) return;
-    updateFormFromLocalStorage();
-  }, [isLoading]);
 
   useEffect(() => {
     const title = form.watch("title");

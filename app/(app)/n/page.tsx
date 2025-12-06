@@ -21,7 +21,7 @@ const Items = [
   {
     title: "Search",
     icon: Search,
-    cmd: "P",
+    cmd: "K",
     type: "search",
   },
   {

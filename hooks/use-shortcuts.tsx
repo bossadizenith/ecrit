@@ -23,6 +23,12 @@ const SHORTCUTS: Shortcut[] = [
     modal: "create-note",
     requiresAuth: true,
   },
+  {
+    key: "k",
+    ctrl: true,
+    modal: "search",
+    requiresAuth: true,
+  },
 ];
 
 const matchShortcut = (e: KeyboardEvent, shortcut: Shortcut): boolean => {
