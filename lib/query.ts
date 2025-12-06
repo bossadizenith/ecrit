@@ -7,8 +7,9 @@ export const QUERIES = {
       const result = await axios.post("/api/notes", data);
       return result.data;
     },
-    all: async () => {
-      const result = await axios.get("/api/notes");
+    all: async (search?: string) => {
+      const params = search ? { search } : {};
+      const result = await axios.get("/api/notes", { params });
       return result.data;
     },
     details: async (id: string) => {

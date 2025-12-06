@@ -21,9 +21,9 @@ import { QUERIES } from "@/lib/query";
 import { Notes } from "@/lib/types";
 import { NoteSchema, noteSchema } from "@/lib/zod-schema";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
-import { useEffect } from "react";
+import { useEffect, useMemo } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
 
@@ -41,6 +41,30 @@ export const CreateNote = () => {
     },
   });
 
+  const { data: existingNotes } = useQuery<Notes[]>({
+    queryKey: [KEYS.NOTES],
+    queryFn: () => QUERIES.NOTES.all(),
+    enabled: isCreateModalOpen,
+  });
+
+  const slug = form.watch("slug");
+
+  const slugExists = useMemo(() => {
+    if (!existingNotes || !slug) return false;
+    return existingNotes.some((note) => note.slug === slug);
+  }, [existingNotes, slug]);
+
+  useEffect(() => {
+    if (slugExists) {
+      form.setError("title", {
+        type: "manual",
+        message: `A note with slug "${slug}" already exists`,
+      });
+    } else {
+      form.clearErrors("title");
+    }
+  }, [slugExists, slug, form]);
+
   const { mutate: createNote, isPending } = useMutation({
     mutationFn: (data: NoteSchema) => QUERIES.NOTES.create(data),
     onSuccess: (data: Notes) => {
@@ -55,20 +79,23 @@ export const CreateNote = () => {
       router.push(`/n/${data.slug}`);
       onClose();
     },
-    onError: (error) => {
-      toast.error(error.message || "Failed to create note");
+    onError: (error: unknown) => {
+      const axiosError = error as { response?: { data?: { error?: string } } };
+      const message =
+        axiosError.response?.data?.error || "Failed to create note";
+      toast.error(message);
     },
   });
 
   useEffect(() => {
     const title = form.watch("title");
-    const slug = title
+    const newSlug = title
       .toLowerCase()
       .trim()
       .replace(/\s+/g, "-")
       .replace(/^-+|-+$/g, "");
-    form.setValue("slug", slug);
-  }, [form.watch("title")]);
+    form.setValue("slug", newSlug);
+  }, [form.watch("title"), form]);
 
   const onSubmit = (data: NoteSchema) => {
     createNote(data);
@@ -112,7 +139,9 @@ export const CreateNote = () => {
                   <LoadingButton
                     type="submit"
                     loading={isPending}
-                    disabled={isPending || !form.formState.isValid}
+                    disabled={
+                      isPending || !form.formState.isValid || slugExists
+                    }
                   >
                     Create Note
                   </LoadingButton>
