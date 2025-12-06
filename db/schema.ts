@@ -6,6 +6,7 @@ import {
   boolean,
   index,
   uniqueIndex,
+  integer,
 } from "drizzle-orm/pg-core";
 
 export const user = pgTable("user", {
@@ -117,6 +118,30 @@ export const notes = pgTable(
   },
   (table) => [uniqueIndex("notes_userId_slug_idx").on(table.userId, table.slug)]
 );
+
+export const file = pgTable("file", {
+  id: text("id").primaryKey(),
+  url: text("url").notNull(),
+  userId: text("user_id")
+    .notNull()
+    .references(() => user.id, { onDelete: "cascade" }),
+  createdAt: timestamp("created_at").defaultNow().notNull(),
+  size: integer("size").notNull(),
+  noteId: text("note_id")
+    .notNull()
+    .references(() => notes.id, { onDelete: "cascade" }),
+  updatedAt: timestamp("updated_at")
+    .defaultNow()
+    .$onUpdate(() => /* @__PURE__ */ new Date())
+    .notNull(),
+});
+
+export const fileRelations = relations(file, ({ one }) => ({
+  user: one(user, {
+    fields: [file.userId],
+    references: [user.id],
+  }),
+}));
 
 export const notesRelations = relations(notes, ({ one }) => ({
   user: one(user, {

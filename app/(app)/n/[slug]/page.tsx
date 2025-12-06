@@ -1,8 +1,7 @@
-type Params = { params: Promise<{ slug: string }> };
+import Editor from "@/components/editor";
 
-const NotePage = async ({ params }: Params) => {
-  const { slug } = await params;
-  return <div>NotePage: {slug}</div>;
+const NotePage = () => {
+  return <Editor />;
 };
 
 export default NotePage;

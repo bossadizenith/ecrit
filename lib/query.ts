@@ -1,4 +1,3 @@
-import { useQuery } from "@tanstack/react-query";
 import { NoteSchema } from "./zod-schema";
 import axios from "axios";
 
@@ -10,11 +9,14 @@ export const QUERIES = {
     },
     all: async () => {
       const result = await axios.get("/api/notes");
-      console.log(result.data);
       return result.data;
     },
     details: async (id: string) => {
       const result = await axios.get(`/api/notes/${id}`);
+      return result.data;
+    },
+    bySlug: async (slug: string) => {
+      const result = await axios.get(`/api/notes/slug/${slug}`);
       return result.data;
     },
     update: async (id: string, data: NoteSchema) => {
