@@ -6,7 +6,6 @@ import { notes } from "@/db/schema";
 import { eq, desc } from "drizzle-orm";
 import { nanoid } from "nanoid";
 
-// GET /api/notes - List all notes for authenticated user
 export const GET = async () => {
   const session = await auth.api.getSession({
     headers: await headers(),
@@ -25,7 +24,6 @@ export const GET = async () => {
   return NextResponse.json(userNotes);
 };
 
-// POST /api/notes - Create a new note
 export const POST = async (request: NextRequest) => {
   const session = await auth.api.getSession({
     headers: await headers(),
@@ -36,11 +34,11 @@ export const POST = async (request: NextRequest) => {
   }
 
   const body = await request.json();
-  const { title, slug, content } = body;
+  const { title, slug } = body;
 
-  if (!title || !slug || !content) {
+  if (!title || !slug) {
     return NextResponse.json(
-      { error: "Title, slug, and content are required" },
+      { error: "Title and slug are required" },
       { status: 400 }
     );
   }
@@ -51,7 +49,6 @@ export const POST = async (request: NextRequest) => {
       id: nanoid(),
       title,
       slug,
-      content,
       userId: session.user.id,
     })
     .returning();

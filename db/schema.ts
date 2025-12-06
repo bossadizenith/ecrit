@@ -105,7 +105,7 @@ export const notes = pgTable(
     id: text("id").primaryKey(),
     title: text("title").notNull(),
     slug: text("slug").notNull(),
-    content: text("content").notNull(),
+    content: text("content").notNull().default(""),
     userId: text("user_id")
       .notNull()
       .references(() => user.id, { onDelete: "cascade" }),

@@ -8,6 +8,13 @@
       "when": 1764974539046,
       "tag": "0000_lovely_jean_grey",
       "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "7",
+      "when": 1764980419659,
+      "tag": "0001_parallel_rawhide_kid",
+      "breakpoints": true
     }
   ]
 }
