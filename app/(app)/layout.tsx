@@ -4,6 +4,7 @@ import { headers } from "next/headers";
 import { redirect } from "next/navigation";
 import { type ReactNode } from "react";
 import { Modals } from "@/components/modals";
+import { ShortcutsProvider } from "@/contex/shortcuts-provider";
 
 const AfterAuthLayout = async ({ children }: { children: ReactNode }) => {
   const session = await auth.api.getSession({
@@ -15,6 +16,7 @@ const AfterAuthLayout = async ({ children }: { children: ReactNode }) => {
   return (
     <SessionProvider value={session}>
       {children}
+      <ShortcutsProvider />
       <Modals />
     </SessionProvider>
   );

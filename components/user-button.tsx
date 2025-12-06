@@ -4,17 +4,16 @@ import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
   DropdownMenuContent,
-  DropdownMenuGroup,
   DropdownMenuItem,
   DropdownMenuSeparator,
   DropdownMenuShortcut,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { UserProfile } from "./ui/user-profile";
 import { useSession } from "@/contex/session";
 import { authClient } from "@/lib/auth-client";
-import { toast } from "sonner";
 import { DropdownMenuLabel } from "@radix-ui/react-dropdown-menu";
+import { toast } from "sonner";
+import { UserProfile } from "./ui/user-profile";
 
 export const UserButton = ({ showName = false }: { showName?: boolean }) => {
   const { user } = useSession();

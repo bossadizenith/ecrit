@@ -41,10 +41,10 @@ export const CreateNote = () => {
     },
   });
 
-  const { mutate: createArticle, isPending } = useMutation({
+  const { mutate: createNote, isPending } = useMutation({
     mutationFn: (data: NoteSchema) => QUERIES.NOTES.create(data),
     onSuccess: (data: Notes) => {
-      toast.success("Article created successfully");
+      toast.success("Note created successfully");
       form.reset();
       queryClient.setQueryData([KEYS.NOTES], (old: Notes[] | undefined) => {
         if (!old) {
@@ -56,7 +56,7 @@ export const CreateNote = () => {
       onClose();
     },
     onError: (error) => {
-      toast.error(error.message || "Failed to create article");
+      toast.error(error.message || "Failed to create note");
     },
   });
 
@@ -70,10 +70,8 @@ export const CreateNote = () => {
     form.setValue("slug", slug);
   }, [form.watch("title")]);
 
-  const slug = form.watch("slug");
-
   const onSubmit = (data: NoteSchema) => {
-    createArticle(data);
+    createNote(data);
   };
 
   const handleKeyDown = (e: React.KeyboardEvent) => {
