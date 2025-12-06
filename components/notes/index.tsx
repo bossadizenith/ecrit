@@ -7,6 +7,8 @@ import { Notes as NoteType } from "@/lib/types";
 import { Button } from "../ui/button";
 import { useDesktopOS } from "@/hooks/use-os";
 import useModal from "@/hooks/use-modal";
+import { Icons } from "../ui/icons";
+import Link from "next/link";
 
 export const Notes = () => {
   const os = useDesktopOS();
@@ -14,7 +16,6 @@ export const Notes = () => {
   const { data, isLoading, error } = useQuery({
     queryKey: [KEYS.NOTES],
     queryFn: () => QUERIES.NOTES.all(),
-    initialData: [],
   });
 
   if (isLoading) return <div>Loading...</div>;
@@ -39,7 +40,7 @@ export const Notes = () => {
     );
 
   return (
-    <div>
+    <div className="flex  flex-col justify-between w-full border divide-y">
       {data.map((note: NoteType) => (
         <Note key={note.id} note={note} />
       ))}
@@ -48,5 +49,22 @@ export const Notes = () => {
 };
 
 const Note = ({ note }: { note: NoteType }) => {
-  return <div>{note.title}</div>;
+  console.log(note);
+  return (
+    <Link href={`/n/${note.slug}`} className="p-4 flex items-center gap-4">
+      <div className="size-8 flex items-center justify-center border bg-muted/20">
+        <Icons.file className="size-4" />
+      </div>
+      <div className="flex flex-col flex-1">
+        <p className="text-sm font-mono first-letter:uppercase">{note.title}</p>
+        <p className="text-xs text-muted-foreground w-fit ml-auto">
+          {new Date(note.createdAt).toLocaleDateString("en-US", {
+            year: "numeric",
+            month: "long",
+            day: "numeric",
+          })}
+        </p>
+      </div>
+    </Link>
+  );
 };

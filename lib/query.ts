@@ -10,6 +10,7 @@ export const QUERIES = {
     },
     all: async () => {
       const result = await axios.get("/api/notes");
+      console.log(result.data);
       return result.data;
     },
     details: async (id: string) => {
