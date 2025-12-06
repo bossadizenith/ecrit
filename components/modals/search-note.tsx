@@ -7,12 +7,11 @@ import { KEYS } from "@/lib/keys";
 import { QUERIES } from "@/lib/query";
 import { Notes, PaginatedNotes } from "@/lib/types";
 import { cn } from "@/lib/utils";
+import { NoteSchema } from "@/lib/zod-schema";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
-import { Button } from "../ui/button";
 import { toast } from "sonner";
-import { NoteSchema } from "@/lib/zod-schema";
 import { LoadingButton } from "../ui/loading-button";
 
 export const SearchNote = () => {

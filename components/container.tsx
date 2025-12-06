@@ -12,7 +12,7 @@ const Container = ({
     <div className="flex min-h-screen items-center justify-center bg-muted/50 font-sans">
       <main
         className={cn(
-          "flex min-h-screen w-full max-w-3xl flex-col items-center justify-between p-16 bg-background border-x gap-8",
+          "flex min-h-screen w-full max-w-3xl flex-col justify-between p-16 bg-background border-x gap-8",
           className
         )}
       >
