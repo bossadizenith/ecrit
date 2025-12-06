@@ -1,6 +1,7 @@
 import Container from "@/components/container";
 import { Footer } from "@/components/footer";
 import { UserButton } from "@/components/user-button";
+import { Notes } from "@/components/notes";
 
 const page = () => {
   return (
@@ -9,7 +10,7 @@ const page = () => {
         <h1 className="text-2xl font-bold font-mono">ecrit.</h1>
         <UserButton />
       </div>
-      <div className="">nothing</div>
+      <Notes />
       <Footer />
     </Container>
   );
