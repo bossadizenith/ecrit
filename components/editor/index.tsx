@@ -452,7 +452,7 @@ export default function Editor() {
   return (
     <div className="flex flex-col bg-muted/50">
       <div
-        className="relative w-full max-w-6xl mx-auto min-h-screen p-10 flex gap-4 flex-col border-x bg-background"
+        className="relative w-full max-w-6xl mx-auto min-h-screen md:p-10 p-4 flex gap-4 flex-col border-x bg-background"
         ref={editorContainerRef}
       >
         <EditorRoot>
@@ -589,7 +589,7 @@ export default function Editor() {
             </AnimatePresence>
             <div
               className={cn(
-                "fixed bottom-0 inset-x-0 max-w-6xl mx-auto h-5 border-t flex items-center justify-between text-sm text-muted-foreground px-4"
+                "fixed bottom-0 inset-x-0 max-w-6xl mx-auto h-5 border-t flex items-center justify-between text-sm text-muted-foreground px-4 bg-background border-x"
               )}
             >
               <span>{wordCount} words</span>
