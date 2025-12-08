@@ -11,14 +11,12 @@ export default function AuthPage() {
   const handleSignIn = async () => {
     try {
       setIsLoading(true);
-      const { data, error } = await authClient.signIn.social({
+      const { error } = await authClient.signIn.social({
         provider: "google",
+        callbackURL: process.env.BETTER_AUTH_CALLBACK_URL || "/n",
       });
       if (error) {
         throw new Error(error.message);
-      }
-      if (data) {
-        toast.success("Signed in successfully");
       }
     } catch (error) {
       toast.error("Failed to sign in");

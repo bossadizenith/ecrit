@@ -29,6 +29,13 @@ const SHORTCUTS: Shortcut[] = [
     modal: "search",
     requiresAuth: true,
   },
+  {
+    key: "p",
+    ctrl: true,
+    shift: true,
+    modal: "settings",
+    requiresAuth: true,
+  },
 ];
 
 const matchShortcut = (e: KeyboardEvent, shortcut: Shortcut): boolean => {
