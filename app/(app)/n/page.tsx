@@ -2,14 +2,13 @@
 
 import Container from "@/components/container";
 import { Footer } from "@/components/footer";
-import { UserButton } from "@/components/user-button";
 import { Notes } from "@/components/notes";
 import { Icons } from "@/components/ui/icons";
-import { Cog, Search } from "lucide-react";
-import { useDesktopOS } from "@/hooks/use-os";
-import { Button } from "@/components/ui/button";
+import { UserButton } from "@/components/user-button";
 import useModal from "@/hooks/use-modal";
+import { useDesktopOS } from "@/hooks/use-os";
 import { ModalTypes } from "@/lib/types";
+import { Cog, Search } from "lucide-react";
 
 const Items = [
   {
@@ -36,12 +35,12 @@ const page = () => {
   const os = useDesktopOS();
   const { onOpen } = useModal();
   return (
-    <Container>
+    <Container className="gap-20">
       <div className="flex items-center justify-between w-full">
         <h1 className="text-2xl font-bold font-mono">ecrit.</h1>
         <UserButton />
       </div>
-      <div className="flex items-center flex-col justify-between w-full gap-6">
+      <div className="flex items-center flex-col w-full gap-6 flex-1">
         <div className="grid grid-cols-3 gap-6 w-full">
           {Items.map((item) => (
             <button

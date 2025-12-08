@@ -40,7 +40,7 @@ export const GET = async (request: NextRequest) => {
       .select()
       .from(notes)
       .where(whereConditions)
-      .orderBy(desc(notes.createdAt))
+      .orderBy(desc(notes.updatedAt))
       .limit(limit)
       .offset(offset),
     db.select({ count: count() }).from(notes).where(whereConditions),

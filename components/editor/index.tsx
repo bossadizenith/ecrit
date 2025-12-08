@@ -1,6 +1,5 @@
 "use client";
 
-// Web Speech API type declarations
 interface SpeechRecognitionEvent extends Event {
   resultIndex: number;
   results: SpeechRecognitionResultList;
@@ -28,6 +27,7 @@ declare global {
   }
 }
 
+import { AnimatePresence, motion } from "motion/react";
 import {
   EditorCommand,
   EditorCommandEmpty,
@@ -36,11 +36,10 @@ import {
   EditorRoot,
   type JSONContent,
 } from "novel";
-import { ImageResizer, handleCommandNavigation } from "novel/extensions";
+import { handleCommandNavigation, ImageResizer } from "novel/extensions";
 import { handleImageDrop, handleImagePaste } from "novel/plugins";
 import { useEffect, useRef, useState } from "react";
 import { useDebouncedCallback } from "use-debounce";
-import { AnimatePresence, motion } from "motion/react";
 
 import { defaultExtensions } from "@/components/editor/extensions";
 import { useUploadFn } from "@/components/editor/image-upload";
@@ -51,10 +50,8 @@ import { TextButtons } from "@/components/editor/selector/text-button";
 import { slashCommand } from "@/components/editor/slash-command";
 
 import UploadImage from "@/components/modals/upload-image";
-import { Button } from "@/components/ui/button";
 import { TextareaAutosize } from "@/components/resizable-text-area";
 import { Separator } from "@/components/ui/separator";
-import { Mic, MicOff } from "lucide-react";
 
 import EditorMenu from "./menu";
 import SlashCommands from "./slash-commands";
@@ -63,12 +60,13 @@ import { useNote } from "@/contex/note";
 import { getLocalStorageKey } from "@/lib/localstorage";
 import { QUERIES } from "@/lib/query";
 import { noteContentSchema, NoteContentSchema } from "@/lib/zod-schema";
-import { useMutation } from "@tanstack/react-query";
-import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { toast } from "sonner";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useCallback } from "react";
+import { useForm } from "react-hook-form";
+import { toast } from "sonner";
 import SoundWave from "./sound-wave";
+import { KEYS } from "@/lib/keys";
 
 const extensions = [...defaultExtensions, slashCommand];
 
@@ -122,6 +120,7 @@ export default function Editor() {
   const lastEscPressRef = useRef<number>(0);
   const recognitionRef = useRef<SpeechRecognition | null>(null);
   const uploadFn = useUploadFn();
+  const queryClient = useQueryClient();
 
   const form = useForm<NoteContentSchema>({
     resolver: zodResolver(noteContentSchema),
@@ -147,6 +146,7 @@ export default function Editor() {
       QUERIES.NOTES.update(data?.id as string, formData),
     onSuccess: () => {
       toast.success("Note saved successfully");
+      queryClient.invalidateQueries({ queryKey: [KEYS.NOTES] });
     },
     onError: (error: unknown) => {
       const axiosError = error as { response?: { data?: { error?: string } } };
@@ -271,17 +271,6 @@ export default function Editor() {
     }
     setTranscript("");
   }, []);
-
-  const handleMicButtonClick = async () => {
-    if (isRecording) {
-      stopVoiceRecording();
-      setIsRecording(false);
-      toast.info("Voice recording stopped.");
-    } else {
-      setIsRecording(true);
-      await startVoiceRecording();
-    }
-  };
 
   useEffect(() => {
     const handleKeyDown = async (e: KeyboardEvent) => {

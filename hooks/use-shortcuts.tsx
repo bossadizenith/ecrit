@@ -54,7 +54,9 @@ export const useShortcuts = () => {
         target.tagName === "TEXTAREA" ||
         target.isContentEditable;
 
-      if (isTyping) return;
+      const hasModifier = e.ctrlKey || e.metaKey || e.altKey;
+
+      if (isTyping && !hasModifier) return;
 
       for (const shortcut of SHORTCUTS) {
         if (matchShortcut(e, shortcut)) {
