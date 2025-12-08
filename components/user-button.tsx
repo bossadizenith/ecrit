@@ -12,12 +12,15 @@ import {
 import { useSession } from "@/contex/session";
 import { authClient } from "@/lib/auth-client";
 import { DropdownMenuLabel } from "@radix-ui/react-dropdown-menu";
-import { toast } from "sonner";
 import { UserProfile } from "./ui/user-profile";
 
 export const UserButton = ({ showName = false }: { showName?: boolean }) => {
   const { user } = useSession();
-  const handleLogout = async () => await authClient.signOut();
+  const handleLogout = async () => {
+    await authClient.signOut();
+    window.location.href = "/auth";
+    window.location.reload();
+  };
 
   return (
     <DropdownMenu>
@@ -36,8 +39,6 @@ export const UserButton = ({ showName = false }: { showName?: boolean }) => {
           onClick={(e) => {
             e.preventDefault();
             handleLogout();
-            toast.success("Logged out successfully");
-            window.location.href = "/auth";
           }}
         >
           Log out
