@@ -1,4 +1,5 @@
 import type { NextConfig } from "next";
+import { siteConfig } from "@/lib/site";
 
 const nextConfig: NextConfig = {
   /* config options here */
@@ -10,8 +11,8 @@ const nextConfig: NextConfig = {
     return [
       {
         source: "/gh",
-        destination: "/",
-        permanent: true,
+        destination: siteConfig.links.github,
+        permanent: false,
       },
     ];
   },

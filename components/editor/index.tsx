@@ -474,6 +474,7 @@ export default function Editor() {
               immediatelyRender={false}
               initialContent={initialContent ?? undefined}
               extensions={extensions}
+              // editable={false}
               className="rounded-xl cursor-text! size-full flex-1"
               editorProps={{
                 handleDOMEvents: {
