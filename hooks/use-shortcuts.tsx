@@ -4,7 +4,10 @@ import { useCallback, useEffect } from "react";
 import { toast } from "sonner";
 import useModal from "./use-modal";
 import { authClient } from "@/lib/auth-client";
-import type { ModalTypes } from "@/lib/types";
+import type { ModalTypes, Notes } from "@/lib/types";
+import { usePathname } from "next/navigation";
+import { useQueryClient } from "@tanstack/react-query";
+import { KEYS } from "@/lib/keys";
 
 type Shortcut = {
   key: string;
@@ -13,6 +16,7 @@ type Shortcut = {
   alt?: boolean;
   modal: ModalTypes;
   requiresAuth: boolean;
+  requiresNote?: boolean;
 };
 
 const SHORTCUTS: Shortcut[] = [
@@ -36,6 +40,14 @@ const SHORTCUTS: Shortcut[] = [
     modal: "settings",
     requiresAuth: true,
   },
+  {
+    key: "d",
+    ctrl: true,
+    shift: true,
+    modal: "delete-note",
+    requiresAuth: true,
+    requiresNote: true,
+  },
 ];
 
 const matchShortcut = (e: KeyboardEvent, shortcut: Shortcut): boolean => {
@@ -52,6 +64,8 @@ const matchShortcut = (e: KeyboardEvent, shortcut: Shortcut): boolean => {
 export const useShortcuts = () => {
   const onOpen = useModal((state) => state.onOpen);
   const { data: session } = authClient.useSession();
+  const pathname = usePathname();
+  const queryClient = useQueryClient();
 
   const handleKeyDown = useCallback(
     (e: KeyboardEvent) => {
@@ -75,12 +89,28 @@ export const useShortcuts = () => {
             return;
           }
 
+          if (shortcut.requiresNote) {
+            const slugMatch = pathname.match(/^\/n\/([^/]+)$/);
+            if (!slugMatch) {
+              toast.error("Please open a note first");
+              return;
+            }
+            const slug = slugMatch[1];
+            const noteData = queryClient.getQueryData<Notes>([KEYS.NOTES, slug]);
+            if (!noteData) {
+              toast.error("Note data not available");
+              return;
+            }
+            onOpen(shortcut.modal, noteData);
+            return;
+          }
+
           onOpen(shortcut.modal);
           return;
         }
       }
     },
-    [session, onOpen]
+    [session, onOpen, pathname, queryClient]
   );
 
   useEffect(() => {
