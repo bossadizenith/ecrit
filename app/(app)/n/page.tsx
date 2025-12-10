@@ -44,7 +44,7 @@ const page = () => {
         <div className="grid md:grid-cols-3 grid-cols-1 md:gap-6 gap-2 w-full">
           {Items.map((item) => (
             <button
-              className="flex flex-col border p-4 gap-2 bg-muted/50 active:scale-98 active:bg-muted/50 transition-all"
+              className="flex flex-col border p-4 gap-2 bg-muted/50 active:scale-98 transition-all"
               key={item.title}
               onClick={() => onOpen(item.type as ModalTypes)}
             >

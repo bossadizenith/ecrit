@@ -110,7 +110,7 @@ const Note = ({ note }: { note: NoteType }) => {
         <Icons.file className="size-4" />
       </div>
       <div className="flex flex-col flex-1">
-        <p className="text-sm font-mono first-letter:uppercase">{note.title}</p>
+        <p className="text-sm font-mono">{note.title}</p>
         <p className="text-xs text-muted-foreground w-fit ml-auto">
           {new Date(note.createdAt).toLocaleDateString("en-US", {
             year: "numeric",

@@ -6,7 +6,6 @@ import {
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuSeparator,
-  DropdownMenuShortcut,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { useSession } from "@/contex/session";
@@ -14,12 +13,17 @@ import { authClient } from "@/lib/auth-client";
 import { DropdownMenuLabel } from "@radix-ui/react-dropdown-menu";
 import { UserProfile } from "./ui/user-profile";
 
-export const UserButton = ({ showName = false }: { showName?: boolean }) => {
+export const UserButton = () => {
   const { user } = useSession();
   const handleLogout = async () => {
-    await authClient.signOut();
-    window.location.href = "/auth";
-    window.location.reload();
+    await authClient.signOut({
+      fetchOptions: {
+        onSuccess: () => {
+          window.location.href = "/auth";
+          window.location.reload();
+        },
+      },
+    });
   };
 
   return (
@@ -40,9 +44,9 @@ export const UserButton = ({ showName = false }: { showName?: boolean }) => {
             e.preventDefault();
             handleLogout();
           }}
+          className="bg-red-100 text-red-500 hover:bg-red-200! hover:text-red-600! transition-all cursor-pointer"
         >
           Log out
-          <DropdownMenuShortcut>⇧⌘Q</DropdownMenuShortcut>
         </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>
