@@ -6,7 +6,7 @@ import { headers } from "next/headers";
 import { NextResponse } from "next/server";
 import bcrypt from "bcryptjs";
 import { deleteCacheByPattern } from "@/lib/cache";
-import { CACHE_KEYS } from "@/lib/cache/cache-keys";
+import { cacheKeys } from "@/lib/cache/cache-keys";
 
 export async function PATCH(
   request: Request,
@@ -51,8 +51,8 @@ export async function PATCH(
       .returning();
 
     // Invalidate cache
-    await deleteCacheByPattern(CACHE_KEYS.NOTES.BY_SLUG(existingNote.slug));
-    await deleteCacheByPattern(CACHE_KEYS.NOTES.BY_ID(id));
+    await deleteCacheByPattern(cacheKeys.noteBySlug(session.user.id, existingNote.slug));
+    await deleteCacheByPattern(cacheKeys.note(session.user.id, id));
 
     return NextResponse.json({
       ...updatedNote,
