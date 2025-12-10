@@ -37,7 +37,7 @@ export const ShareNote = () => {
       setIsPublic(note.public || false);
       setPassword("");
       if (note.public) {
-        setShareUrl(`${window.location.origin}/shared/${note.slug}`);
+        setShareUrl(`${window.location.origin}/shared/${note.id}`);
       } else {
         setShareUrl("");
       }
@@ -48,9 +48,7 @@ export const ShareNote = () => {
     mutationFn: (data: { public: boolean; password?: string }) =>
       QUERIES.NOTES.share(note!.id, data),
     onSuccess: (response) => {
-      toast.success(
-        isPublic ? "Note is now shared" : "Note sharing disabled"
-      );
+      toast.success(isPublic ? "Note is now shared" : "Note sharing disabled");
       queryClient.invalidateQueries({ queryKey: [KEYS.NOTES] });
       queryClient.invalidateQueries({ queryKey: [KEYS.NOTES, note?.slug] });
       if (response.shareUrl) {
@@ -157,11 +155,7 @@ export const ShareNote = () => {
                     <div className="space-y-2">
                       <Label>Share Link</Label>
                       <div className="flex gap-2">
-                        <Input
-                          readOnly
-                          value={shareUrl}
-                          className="text-sm"
-                        />
+                        <Input readOnly value={shareUrl} className="text-sm" />
                         <Button
                           variant="outline"
                           size="icon"

@@ -92,7 +92,7 @@ const textToEditorContent = (text: string): JSONContent => {
   };
 };
 
-const parseContent = (content: string): JSONContent => {
+export const parseContent = (content: string): JSONContent => {
   if (!content) return defaultValue;
 
   try {
@@ -471,7 +471,6 @@ export default function Editor() {
               immediatelyRender={false}
               initialContent={initialContent ?? undefined}
               extensions={extensions}
-              // editable={false}
               className="rounded-xl cursor-text! size-full flex-1"
               editorProps={{
                 handleDOMEvents: {

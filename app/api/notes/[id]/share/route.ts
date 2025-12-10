@@ -50,15 +50,14 @@ export async function PATCH(
       .where(and(eq(notes.id, id), eq(notes.userId, session.user.id)))
       .returning();
 
-    // Invalidate cache
-    await deleteCacheByPattern(cacheKeys.noteBySlug(session.user.id, existingNote.slug));
+    await deleteCacheByPattern(
+      cacheKeys.noteBySlug(session.user.id, existingNote.slug)
+    );
     await deleteCacheByPattern(cacheKeys.note(session.user.id, id));
 
     return NextResponse.json({
       ...updatedNote,
-      shareUrl: isPublic
-        ? `${process.env.BETTER_AUTH_URL}/shared/${existingNote.slug}`
-        : null,
+      shareUrl: isPublic ? `${process.env.BETTER_AUTH_URL}/shared/${id}` : null,
     });
   } catch (error) {
     return NextResponse.json(

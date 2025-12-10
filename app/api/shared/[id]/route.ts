@@ -6,16 +6,16 @@ import bcrypt from "bcryptjs";
 
 export async function POST(
   request: Request,
-  { params }: { params: Promise<{ slug: string }> }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
-    const { slug } = await params;
+    const { id } = await params;
     const body = await request.json().catch(() => ({}));
     const { password } = body;
 
     // Find the public note
     const note = await db.query.notes.findFirst({
-      where: and(eq(notes.slug, slug), eq(notes.public, true)),
+      where: and(eq(notes.id, id), eq(notes.public, true)),
     });
 
     if (!note) {
@@ -34,7 +34,10 @@ export async function POST(
         );
       }
 
-      const isValidPassword = await bcrypt.compare(password, note.sharePassword);
+      const isValidPassword = await bcrypt.compare(
+        password,
+        note.sharePassword
+      );
       if (!isValidPassword) {
         return NextResponse.json(
           { error: "Invalid password", requiresPassword: true },
@@ -62,14 +65,14 @@ export async function POST(
 
 export async function GET(
   request: Request,
-  { params }: { params: Promise<{ slug: string }> }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
-    const { slug } = await params;
+    const { id } = await params;
 
     // Find the public note
     const note = await db.query.notes.findFirst({
-      where: and(eq(notes.slug, slug), eq(notes.public, true)),
+      where: and(eq(notes.id, id), eq(notes.public, true)),
     });
 
     if (!note) {

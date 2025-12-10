@@ -39,12 +39,12 @@ export const QUERIES = {
     },
   },
   SHARED: {
-    get: async (slug: string) => {
-      const result = await axios.get(`/api/shared/${slug}`);
+    get: async (id: string) => {
+      const result = await axios.get(`/api/shared/${id}`);
       return result.data;
     },
-    access: async (slug: string, password?: string) => {
-      const result = await axios.post(`/api/shared/${slug}`, { password });
+    access: async (id: string, password?: string) => {
+      const result = await axios.post(`/api/shared/${id}`, { password });
       return result.data;
     },
   },
