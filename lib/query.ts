@@ -33,5 +33,19 @@ export const QUERIES = {
       const result = await axios.delete(`/api/notes/${id}`);
       return result.data;
     },
+    share: async (id: string, data: { public: boolean; password?: string }) => {
+      const result = await axios.patch(`/api/notes/${id}/share`, data);
+      return result.data;
+    },
+  },
+  SHARED: {
+    get: async (slug: string) => {
+      const result = await axios.get(`/api/shared/${slug}`);
+      return result.data;
+    },
+    access: async (slug: string, password?: string) => {
+      const result = await axios.post(`/api/shared/${slug}`, { password });
+      return result.data;
+    },
   },
 } as const;

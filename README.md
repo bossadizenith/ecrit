@@ -22,6 +22,7 @@
 | `Ctrl + Alt + N`   | Create new note                           |
 | `Ctrl + Shift + P` | Open settings                             |
 | `Ctrl + Shift + D` | Delete current note (with confirmation)   |
+| `Ctrl + Shift + S` | Share current note                        |
 
 ### Editor Shortcuts
 

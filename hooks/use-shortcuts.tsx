@@ -48,6 +48,14 @@ const SHORTCUTS: Shortcut[] = [
     requiresAuth: true,
     requiresNote: true,
   },
+  {
+    key: "s",
+    ctrl: true,
+    shift: true,
+    modal: "share-note",
+    requiresAuth: true,
+    requiresNote: true,
+  },
 ];
 
 const matchShortcut = (e: KeyboardEvent, shortcut: Shortcut): boolean => {

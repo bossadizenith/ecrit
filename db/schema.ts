@@ -110,6 +110,8 @@ export const notes = pgTable(
     userId: text("user_id")
       .notNull()
       .references(() => user.id, { onDelete: "cascade" }),
+    public: boolean("public").default(false).notNull(),
+    sharePassword: text("share_password"),
     createdAt: timestamp("created_at").defaultNow().notNull(),
     updatedAt: timestamp("updated_at")
       .defaultNow()

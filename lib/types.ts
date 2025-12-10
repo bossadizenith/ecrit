@@ -26,4 +26,5 @@ export type ModalTypes =
   | "settings"
   | "upload-image"
   | "upload-youtube"
-  | "delete-note";
+  | "delete-note"
+  | "share-note";
