@@ -1,5 +1,6 @@
 "use client";
 
+import Container from "@/components/container";
 import { parseContent } from "@/components/editor";
 import { defaultExtensions } from "@/components/editor/extensions";
 import { Input } from "@/components/ui/input";
@@ -126,10 +127,10 @@ export default function SharedNotePage() {
 
   if (note) {
     return (
-      <div className="min-h-screen py-8 px-4">
-        <div className="max-w-3xl mx-auto">
-          <header className="mb-8 pb-4 border-b">
-            <h1 className="text-3xl font-bold">{note.title}</h1>
+      <Container className="max-w-6xl">
+        <div className="">
+          <header className="mb-8 pb-4">
+            <h1 className="text-3xl font-semibold font-mono">{note.title}</h1>
             <p className="text-sm text-muted-foreground mt-2">
               Last updated: {new Date(note.updatedAt).toLocaleDateString()}
             </p>
@@ -143,13 +144,13 @@ export default function SharedNotePage() {
               editorProps={{
                 attributes: {
                   class:
-                    "prose dark:prose-invert prose-headings:font-title font-default focus:outline-none max-w-full",
+                    "prose dark:prose-invert prose-headings:font-title font-mono focus:outline-none max-w-full",
                 },
               }}
             />
           </EditorRoot>
         </div>
-      </div>
+      </Container>
     );
   }
 
