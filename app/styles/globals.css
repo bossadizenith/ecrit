@@ -125,7 +125,7 @@
 }
 
 .shortcut-active {
-  transform: scale(0.95) !important;
+  transform: scale(0.98) !important;
   opacity: 0.85 !important;
   transition: transform 50ms ease-out, opacity 50ms ease-out !important;
 }
