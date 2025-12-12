@@ -6,12 +6,7 @@ import { notes } from "@/db/schema";
 import { eq, desc, and, or, ilike, count } from "drizzle-orm";
 import { nanoid } from "nanoid";
 import { noteSchema } from "@/lib/zod-schema";
-import {
-  cacheKeys,
-  getCache,
-  setCache,
-  deleteCacheKeys,
-} from "@/lib/cache";
+import { cacheKeys, getCache, setCache, deleteCacheKeys } from "@/lib/cache";
 
 const CACHE_TTL = 60 * 5;
 
@@ -57,7 +52,14 @@ export const GET = async (request: NextRequest) => {
 
   const [userNotes, totalResult] = await Promise.all([
     db
-      .select()
+      .select({
+        id: notes.id,
+        title: notes.title,
+        slug: notes.slug,
+        userId: notes.userId,
+        createdAt: notes.createdAt,
+        updatedAt: notes.updatedAt,
+      })
       .from(notes)
       .where(whereConditions)
       .orderBy(desc(notes.updatedAt))

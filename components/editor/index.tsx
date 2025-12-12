@@ -449,7 +449,7 @@ export default function Editor() {
   return (
     <div className="flex flex-col bg-muted/50">
       <div
-        className="relative w-full max-w-6xl mx-auto min-h-screen md:p-10 p-4 flex gap-4 flex-col border-x bg-background"
+        className="relative w-full max-w-6xl mx-auto  min-h-screen md:p-10 p-4 flex gap-4 flex-col border bg-background"
         ref={editorContainerRef}
       >
         <EditorRoot>
