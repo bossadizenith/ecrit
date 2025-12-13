@@ -1,21 +1,24 @@
 import { Button } from "@/components/ui/button";
 import Container from "@/components/container";
 import Link from "next/link";
+import { siteConfig } from "@/lib/site";
 
 export default function Home() {
   return (
     <Container className="max-w-6xl">
       <div className="max-w-3xl justify-between flex-1 w-full gap-20 flex flex-col mx-auto">
         <div>
-          <h1 className="text-2xl font-bold font-mono w-full">écrit.</h1>
+          <h1 className="text-2xl font-bold font-mono w-full">
+            {siteConfig.name}
+          </h1>
           <p className="text-lg text-muted-foreground">
-            writing without friction
+            {siteConfig.description}
           </p>
         </div>
 
         <div className="flex md:items-end items-start justify-between w-full flex-col md:flex-row gap-4 ">
           <div className="flex flex-col gap-4">
-            <h2 className="text-2xl font-bold font-mono">écrit</h2>
+            <h2 className="text-2xl font-bold font-mono">{siteConfig.name}</h2>
             <p className="text-lg text-muted-foreground flex flex-col">
               <span>the fastest way to start writing.</span>
               <span>the cleanest place to keep writing.</span>

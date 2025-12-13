@@ -157,7 +157,7 @@ export const SearchNote = () => {
                 key={note.id}
                 type="button"
                 className={cn(
-                  "text-left p-2 rounded-md transition-colors line-clamp-1",
+                  "text-left p-2 rounded-md transition-colors",
                   index === selectedIndex
                     ? "bg-accent text-accent-foreground"
                     : "hover:bg-accent/50"
@@ -165,7 +165,7 @@ export const SearchNote = () => {
                 onClick={() => handleNavigateToNote(note.slug)}
                 onMouseEnter={() => setSelectedIndex(index)}
               >
-                <span className="font-medium">{note.title}</span>
+                <span className="font-medium line-clamp-1">{note.title}</span>
               </button>
             ))}
           </div>
