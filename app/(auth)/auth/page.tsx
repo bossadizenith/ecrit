@@ -3,10 +3,14 @@
 import { LoadingButton } from "@/components/ui/loading-button";
 import { authClient } from "@/lib/auth-client";
 import { Icons } from "@/components/ui/icons";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { toast } from "sonner";
+import Container from "@/components/container";
+import { useRouter } from "next/navigation";
 
 export default function AuthPage() {
+  const { data: session, isPending } = authClient.useSession();
+  const router = useRouter();
   const [isLoading, setIsLoading] = useState(false);
   const handleSignIn = async () => {
     try {
@@ -25,14 +29,22 @@ export default function AuthPage() {
     }
   };
 
+  useEffect(() => {
+    if (!isPending && session) {
+      router.replace("/n");
+    }
+  }, [isPending, router, session]);
+
   return (
-    <div className="flex min-h-screen items-center justify-center bg-muted/50 font-sans">
-      <main className="flex min-h-screen w-full max-w-3xl flex-col items-center justify-center py-32 px-16 bg-background border-x">
-        <LoadingButton onClick={handleSignIn} loading={isLoading}>
-          <Icons.google />
-          Sign in with Google
-        </LoadingButton>
-      </main>
-    </div>
+    <Container className="max-w-6xl flex items-center justify-center">
+      <LoadingButton
+        onClick={handleSignIn}
+        loading={isLoading}
+        className="px-10"
+      >
+        <Icons.google />
+        Sign in with Google
+      </LoadingButton>
+    </Container>
   );
 }
