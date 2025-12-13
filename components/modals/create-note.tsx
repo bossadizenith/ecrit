@@ -81,14 +81,17 @@ export const CreateNote = () => {
       toast.error(message);
     },
   });
-
   useEffect(() => {
     const title = form.watch("title");
+
     const newSlug = title
       .toLowerCase()
       .trim()
+      .replace(/[^a-z0-9\s-]/g, "")
       .replace(/\s+/g, "-")
+      .replace(/-+/g, "-")
       .replace(/^-+|-+$/g, "");
+
     form.setValue("slug", newSlug);
   }, [form.watch("title"), form]);
 

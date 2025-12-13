@@ -4,26 +4,28 @@ import Link from "next/link";
 
 export default function Home() {
   return (
-    <Container>
-      <div>
-        <h1 className="text-2xl font-bold font-mono w-full">écrit.</h1>
-        <p className="text-lg text-muted-foreground">
-          writing without friction
-        </p>
-      </div>
-
-      <div className="flex md:items-end items-start justify-between w-full flex-col md:flex-row gap-4 ">
-        <div className="flex flex-col gap-4">
-          <h2 className="text-2xl font-bold font-mono">écrit</h2>
-          <p className="text-lg text-muted-foreground flex flex-col">
-            <span>the fastest way to start writing.</span>
-            <span>the cleanest place to keep writing.</span>
+    <Container className="max-w-6xl">
+      <div className="max-w-3xl justify-between flex-1 w-full gap-20 flex flex-col mx-auto">
+        <div>
+          <h1 className="text-2xl font-bold font-mono w-full">écrit.</h1>
+          <p className="text-lg text-muted-foreground">
+            writing without friction
           </p>
         </div>
 
-        <Button asChild>
-          <Link href="/n">Start Writing</Link>
-        </Button>
+        <div className="flex md:items-end items-start justify-between w-full flex-col md:flex-row gap-4 ">
+          <div className="flex flex-col gap-4">
+            <h2 className="text-2xl font-bold font-mono">écrit</h2>
+            <p className="text-lg text-muted-foreground flex flex-col">
+              <span>the fastest way to start writing.</span>
+              <span>the cleanest place to keep writing.</span>
+            </p>
+          </div>
+
+          <Button asChild>
+            <Link href="/n">Start Writing</Link>
+          </Button>
+        </div>
       </div>
     </Container>
   );

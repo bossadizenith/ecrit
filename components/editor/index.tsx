@@ -70,6 +70,7 @@ import { KEYS } from "@/lib/keys";
 import { cn } from "@/lib/utils";
 import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
+import { NoteSkeleton } from "@/components/skeletons/note";
 
 const extensions = [...defaultExtensions, slashCommand];
 
@@ -442,9 +443,9 @@ export default function Editor() {
 
   const status = isSaving ? "Saving..." : isDirty ? "Not saved" : "Saved";
 
-  if (!initialContent) return null;
+  if (!initialContent) return <NoteSkeleton />;
 
-  if (isLoading) return <div>Loading...</div>;
+  if (isLoading) return <NoteSkeleton />;
 
   return (
     <div className="flex flex-col bg-muted/50">

@@ -157,7 +157,7 @@ export const SearchNote = () => {
                 key={note.id}
                 type="button"
                 className={cn(
-                  "text-left p-2 rounded-md transition-colors",
+                  "text-left p-2 rounded-md transition-colors line-clamp-1",
                   index === selectedIndex
                     ? "bg-accent text-accent-foreground"
                     : "hover:bg-accent/50"
