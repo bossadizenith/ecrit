@@ -9,8 +9,9 @@ const iconvVariants = cva("border flex items-center justify-center", {
     size: {
       default: "size-10 min-w-10",
       sm: "size-8 min-w-8",
-      lg: "size-10 min-w-10",
+      lg: "size-12 min-w-12",
       xs: "size-6 min-w-6",
+      xl: "size-20 min-w-20",
     },
   },
   defaultVariants: {

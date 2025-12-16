@@ -36,7 +36,7 @@ export const UserButton = () => {
           className="hover:bg-transparent rounded-full"
           size="icon"
         >
-          <UserProfile url={user.image} name={user.name} size="lg" />
+          <UserProfile url={user.image} name={user.name} />
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent className="w-56" align="center">
@@ -46,7 +46,7 @@ export const UserButton = () => {
         </DropdownMenuLabel>
         <DropdownMenuSeparator />
         <DropdownMenuGroup className="flex flex-col gap-1">
-          <DropdownMenuItem className="cursor-pointer" asChild>
+          <DropdownMenuItem className="cursor-pointer" asChild disabled>
             <Link href="/settings">Settings</Link>
           </DropdownMenuItem>
           <DropdownMenuItem

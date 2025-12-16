@@ -7,7 +7,7 @@ const Page = () => {
     <Container className="max-w-6xl">
       <div className="max-w-3xl flex-1 w-full gap-20 flex flex-col mx-auto">
         <Header />
-        <div className="flex  flex-col w-full gap-6 flex-1">
+        <div className="flex  flex-col w-full gap-6 flex-1 ">
           <SettingsClient />
         </div>
       </div>
